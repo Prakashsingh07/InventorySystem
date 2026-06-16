@@ -82,7 +82,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddScoped<ISupplierService, SupplierService>();
-
+builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
 
 var app = builder.Build();
 
