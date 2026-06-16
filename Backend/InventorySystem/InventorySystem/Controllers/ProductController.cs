@@ -3,6 +3,7 @@ using InventorySystem.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace InventorySystem.Controllers
 {
@@ -56,6 +57,26 @@ namespace InventorySystem.Controllers
         public IActionResult LowStock()
         {
             return Ok(_service.GetLowStock());
+        }
+
+        [HttpPut("{id}/stock")]
+        [Authorize(Roles = "Staff,Manager,Admin")]
+        public IActionResult AdjustStock(int id,StockAdjustmentRequestDto dto)
+        {
+            var userId =int.Parse(User.FindFirst("UserId")!.Value);
+
+            _service.AdjustStock(
+                id,
+                dto,
+                userId);
+
+            return Ok("Stock adjusted successfully");
+        }
+
+        [HttpGet("{id}/stock-history")]
+        public IActionResult GetStockHistory(int id)
+        {
+            return Ok(_service.GetStockHistory(id));
         }
     }
 }

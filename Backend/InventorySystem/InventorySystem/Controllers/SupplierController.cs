@@ -24,7 +24,7 @@ namespace InventorySystem.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles ="Manager ,Admin")]
+        [Authorize(Roles ="Manager,Admin")]
         public IActionResult Create(CreateSupplierRequestDto dto)
         {
             _service.Create(dto);
@@ -32,7 +32,7 @@ namespace InventorySystem.Controllers
         }
 
         [HttpPut("{id}/status")]
-        [Authorize(Roles = "Manager ,Admin")]
+        [Authorize(Roles = "Manager,Admin")]
         public IActionResult UpdateStatus(int id, UpdateSupplierStatusDto dto)
         {
             _service.UpdateStatus(id, dto);

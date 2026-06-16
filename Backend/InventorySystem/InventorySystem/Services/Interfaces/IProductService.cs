@@ -11,5 +11,9 @@ namespace InventorySystem.Services.Interfaces
         void Update(int id,UpdateProductRequestDto dto);
         List<ProductResponseDto> Search(string search);
         List<ProductResponseDto> GetLowStock();
+        void AdjustStock(int productId,StockAdjustmentRequestDto dto,int userId);
+
+        List<StockMovementResponseDto> GetStockHistory(int productId);
     }
 }
+

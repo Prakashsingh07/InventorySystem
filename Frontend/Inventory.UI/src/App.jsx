@@ -7,6 +7,8 @@ import Products from './pages/Products';
 import AddProduct from './pages/AddProduct';
 import EditProduct from './pages/EditProduct';
 import AddSupplier from './pages/AddSupplier';
+import StockAdjustment from "./pages/StockAdjustment";
+import StockHistory from "./pages/StockHistory";
 
 function App() {
     return (
@@ -37,6 +39,14 @@ function App() {
                 <Route path='/suppliers/add' element={
                     <ProtectedRoute><AddSupplier /></ProtectedRoute>
                 } />
+
+                <Route path="/stock-adjustment/:id" element={
+                    <ProtectedRoute> <StockAdjustment /> </ProtectedRoute>
+                } />
+
+                <Route path="/stock-history/:id" element={
+                    <ProtectedRoute> <StockHistory /> </ProtectedRoute>
+                      }/>
             </Routes>
         </BrowserRouter>
     );

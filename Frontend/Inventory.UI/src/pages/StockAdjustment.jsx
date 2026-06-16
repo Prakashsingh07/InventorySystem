@@ -1,39 +1,31 @@
-import { useState, useEffect } from "react";
-import { getProducts, updateProduct } from "../services/productService";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { adjustStock, getProducts } from "../services/productService";
 
-function EditProduct() {
+function StockAdjustment() {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const [products, setProducts] = useState([]);
+
   const [formData, setFormData] = useState({
-    name: "",
-    categoryId: "",
-    unitPrice: "",
-    reorderThreshold: "",
+    productId: id || "",
+    quantityDelta: "",
+    reason: "",
   });
 
   useEffect(() => {
-    const loadProduct = async () => {
-      try {
-        const all = await getProducts();
-        const product = all.find((p) => p.productId === parseInt(id));
+    loadProducts();
+  }, []);
 
-        if (product) {
-          setFormData({
-            name: product.name,
-            categoryId: product.categoryId || "",
-            unitPrice: product.unitPrice,
-            reorderThreshold: product.reorderThreshold,
-          });
-        }
-      } catch (error) {
-        alert("Failed to load product");
-      }
-    };
-
-    loadProduct();
-  }, [id]);
+  const loadProducts = async () => {
+    try {
+      const data = await getProducts();
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -46,17 +38,15 @@ function EditProduct() {
     e.preventDefault();
 
     try {
-      await updateProduct(id, {
-        ...formData,
-        categoryId: parseInt(formData.categoryId),
-        unitPrice: parseFloat(formData.unitPrice),
-        reorderThreshold: parseInt(formData.reorderThreshold),
+      await adjustStock(formData.productId, {
+        quantityDelta: Number(formData.quantityDelta),
+        reason: formData.reason,
       });
 
-      alert("Product updated successfully");
+      alert("Stock adjusted successfully");
       navigate("/products");
     } catch (error) {
-      alert("Unable to update product");
+      alert("Unable to adjust stock");
     }
   };
 
@@ -64,71 +54,77 @@ function EditProduct() {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-lg rounded-xl bg-white p-8 shadow-lg">
         <h2 className="mb-6 text-center text-3xl font-bold text-gray-800">
-          Edit Product
+          Adjust Stock
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Product Selection */}
           <div>
             <label className="mb-2 block font-medium text-gray-700">
-              Product Name
+              Select Product
             </label>
-            <input
-              name="name"
-              placeholder="Enter product name"
-              value={formData.name}
+
+            <select
+              name="productId"
+              value={formData.productId}
               onChange={handleChange}
+              required
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-            />
+            >
+              <option value="">-- Select Product --</option>
+
+              {products.map((product) => (
+                <option
+                  key={product.productId}
+                  value={product.productId}
+                >
+                  {product.name} ({product.sku})
+                </option>
+              ))}
+            </select>
           </div>
 
+          {/* Quantity */}
           <div>
             <label className="mb-2 block font-medium text-gray-700">
-              Category ID
+              Quantity Change
             </label>
+
             <input
-              name="categoryId"
               type="number"
-              placeholder="Enter category ID"
-              value={formData.categoryId}
+              name="quantityDelta"
+              placeholder="Example: +10 or -5"
+              value={formData.quantityDelta}
               onChange={handleChange}
+              required
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
             />
           </div>
 
+          {/* Reason */}
           <div>
             <label className="mb-2 block font-medium text-gray-700">
-              Unit Price
+              Reason
             </label>
+
             <input
-              name="unitPrice"
-              type="number"
-              placeholder="Enter price"
-              value={formData.unitPrice}
+              type="text"
+              name="reason"
+              placeholder="Reason for adjustment"
+              value={formData.reason}
               onChange={handleChange}
+              required
               className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
             />
           </div>
 
-          <div>
-            <label className="mb-2 block font-medium text-gray-700">
-              Reorder Threshold
-            </label>
-            <input
-              name="reorderThreshold"
-              type="number"
-              placeholder="Enter reorder threshold"
-              value={formData.reorderThreshold}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-            />
-          </div>
-
-          <div className="flex gap-4 pt-2">
+          {/* Buttons */}
+          <div className="flex gap-3 pt-2">
             <button
               type="submit"
               className="flex-1 rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
             >
-              Update Product
+              Save Adjustment
             </button>
 
             <button
@@ -145,4 +141,4 @@ function EditProduct() {
   );
 }
 
-export default EditProduct;
+export default StockAdjustment;

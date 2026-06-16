@@ -24,3 +24,20 @@ export const getLowStockProducts = async () => {
     const response = await api.get("/Product/low-stock");
     return response.data;
 };
+
+export const adjustStock = async (productId, data) => {
+    const response = await api.put(
+        `/Product/${productId}/stock`, // ✅ was /products/ (wrong casing)
+        data
+    );
+
+    return response.data;
+};
+
+export const getStockHistory = async (productId) => {
+    const response = await api.get(
+        `/Product/${productId}/stock-history` // ✅ was /products/ (wrong casing)
+    );
+
+    return response.data;
+};
