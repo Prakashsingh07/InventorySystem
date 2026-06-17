@@ -12,7 +12,6 @@ namespace InventorySystem.Tests
         [Fact]
         public void UpdateStatus_Should_Update_Supplier_Status()
         {
-            // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>()
                 .UseInMemoryDatabase("SupplierTestDb")
                 .Options;
@@ -30,7 +29,7 @@ namespace InventorySystem.Tests
 
             var service = new SupplierService(context);
 
-            // Act
+   
             service.UpdateStatus(
                 1,
                 new UpdateSupplierStatusDto
@@ -38,7 +37,7 @@ namespace InventorySystem.Tests
                     IsActive = false
                 });
 
-            // Assert
+      
             Assert.False(context.Suppliers.First().IsActive);
         }
     }

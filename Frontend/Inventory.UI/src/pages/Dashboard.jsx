@@ -27,7 +27,6 @@ function Dashboard() {
         </button>
       </header>
 
-      {/* Main Content */}
       <div className="mx-auto max-w-6xl px-6 py-10">
         <h2 className="mb-2 text-4xl font-bold text-gray-800">
           Welcome 👋
@@ -39,7 +38,6 @@ function Dashboard() {
 
         <div className="grid gap-8 md:grid-cols-2">
 
-          {/* Products */}
           <div
             onClick={() => navigate("/products")}
             className="cursor-pointer rounded-2xl bg-blue-600 p-8 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-2xl"
@@ -51,7 +49,6 @@ function Dashboard() {
             </p>
           </div>
 
-          {/* Stock Adjustment */}
           <div
             onClick={() => navigate("/stock-adjustment")}
             className="cursor-pointer rounded-2xl bg-yellow-500 p-8 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-yellow-600 hover:shadow-2xl"
@@ -65,7 +62,6 @@ function Dashboard() {
             </p>
           </div>
 
-          {/* Suppliers */}
           <div
             onClick={() => navigate("/suppliers")}
             className="cursor-pointer rounded-2xl bg-green-600 p-8 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-green-700 hover:shadow-2xl"
@@ -79,7 +75,6 @@ function Dashboard() {
             </p>
           </div>
 
-          {/* Purchase Orders */}
           <div
             onClick={() => navigate("/purchase-orders")}
             className="cursor-pointer rounded-2xl bg-purple-600 p-8 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-purple-700 hover:shadow-2xl"
