@@ -14,3 +14,4 @@ export const updateSupplierStatus = async (id, data) => {
     const response = await api.put(`/Supplier/${id}/status`, data);
     return response.data;
 };
+

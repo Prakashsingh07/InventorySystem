@@ -27,7 +27,7 @@ export const getLowStockProducts = async () => {
 
 export const adjustStock = async (productId, data) => {
     const response = await api.put(
-        `/Product/${productId}/stock`, // ✅ was /products/ (wrong casing)
+        `/Product/${productId}/stock`, 
         data
     );
 
@@ -36,7 +36,7 @@ export const adjustStock = async (productId, data) => {
 
 export const getStockHistory = async (productId) => {
     const response = await api.get(
-        `/Product/${productId}/stock-history` // ✅ was /products/ (wrong casing)
+        `/Product/${productId}/stock-history` 
     );
 
     return response.data;

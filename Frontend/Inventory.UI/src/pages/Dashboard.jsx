@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 function Dashboard() {
   const navigate = useNavigate();
 
-  // Get role from localStorage
   const role = localStorage.getItem("role");
 
   const handleLogout = () => {
@@ -40,7 +39,7 @@ function Dashboard() {
 
         <div className="grid gap-8 md:grid-cols-2">
 
-          {/* Products - Visible to Everyone */}
+          {/* Products */}
           <div
             onClick={() => navigate("/products")}
             className="cursor-pointer rounded-2xl bg-blue-600 p-8 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-blue-700 hover:shadow-2xl"
@@ -48,11 +47,11 @@ function Dashboard() {
             <div className="mb-4 text-5xl">📦</div>
             <h3 className="mb-2 text-2xl font-bold">Products</h3>
             <p className="text-blue-100">
-              View, add, edit and search products.
+              View, search and manage inventory products.
             </p>
           </div>
 
-          {/* Stock Adjustment - Visible to Everyone */}
+          {/* Stock Adjustment */}
           <div
             onClick={() => navigate("/stock-adjustment")}
             className="cursor-pointer rounded-2xl bg-yellow-500 p-8 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-yellow-600 hover:shadow-2xl"
@@ -62,39 +61,37 @@ function Dashboard() {
               Stock Adjustment
             </h3>
             <p className="text-yellow-100">
-              Increase or decrease stock and maintain audit logs.
+              Increase or decrease stock with audit tracking.
             </p>
           </div>
 
-          {/* Suppliers - Manager/Admin Only */}
-          {(role === "Manager" || role === "Admin") && (
-            <div
-              onClick={() => navigate("/suppliers")}
-              className="cursor-pointer rounded-2xl bg-green-600 p-8 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-green-700 hover:shadow-2xl"
-            >
-              <div className="mb-4 text-5xl">🏭</div>
-              <h3 className="mb-2 text-2xl font-bold">Suppliers</h3>
-              <p className="text-green-100">
-                Manage supplier information and status.
-              </p>
-            </div>
-          )}
+          {/* Suppliers */}
+          <div
+            onClick={() => navigate("/suppliers")}
+            className="cursor-pointer rounded-2xl bg-green-600 p-8 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-green-700 hover:shadow-2xl"
+          >
+            <div className="mb-4 text-5xl">🏭</div>
+            <h3 className="mb-2 text-2xl font-bold">
+              Suppliers
+            </h3>
+            <p className="text-green-100">
+              View and manage supplier information.
+            </p>
+          </div>
 
-          {/* Purchase Orders - Manager/Admin Only */}
-          {(role === "Manager" || role === "Admin") && (
-            <div
-              onClick={() => navigate("/purchase-orders")}
-              className="cursor-pointer rounded-2xl bg-purple-600 p-8 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-purple-700 hover:shadow-2xl"
-            >
-              <div className="mb-4 text-5xl">📝</div>
-              <h3 className="mb-2 text-2xl font-bold">
-                Purchase Orders
-              </h3>
-              <p className="text-purple-100">
-                Create, approve and receive purchase orders.
-              </p>
-            </div>
-          )}
+          {/* Purchase Orders */}
+          <div
+            onClick={() => navigate("/purchase-orders")}
+            className="cursor-pointer rounded-2xl bg-purple-600 p-8 text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-purple-700 hover:shadow-2xl"
+          >
+            <div className="mb-4 text-5xl">📝</div>
+            <h3 className="mb-2 text-2xl font-bold">
+              Purchase Orders
+            </h3>
+            <p className="text-purple-100">
+              Create, submit, approve and receive purchase orders.
+            </p>
+          </div>
 
         </div>
       </div>
